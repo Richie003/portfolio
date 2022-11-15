@@ -1,0 +1,12 @@
+portenv/
+.env
+.venv
+env/
+env/*
+venv/
+ENV/
+env.bak/
+venv.bak/
+portenv.bak/
+index/migrations/
+collected_static/

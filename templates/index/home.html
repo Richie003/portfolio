@@ -1,0 +1,77 @@
+{%extends 'index/base.html' %}
+{%load static%}
+
+{%block links%}
+<link rel="stylesheet" href="/static/assets/css/owl.carousel.css">
+<link rel="stylesheet" href="/static/assets/css/animate.min.css">
+<link rel="stylesheet" href="/static/assets/css/owl.theme.default.min.css">
+
+<style>
+#vector_19{
+  transform: rotateZ(45deg);
+}
+</style>
+{%endblock links%}
+
+{%block body%}
+<header class="container-lg col-xxl-8 px-5 py-5 border rounded-3 shadow">
+  <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+    <div class="col-10 col-sm-8 col-lg-6 mx-auto" >
+      <embed src="/static/icons/Web-Developer.svg" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+    </div>
+    <div class="col-lg-6 position-relative">
+      <div class="circle-1 px-5 py-5 pale-bg1"></div>
+      <div class="circle-2 px-5 py-5 pale-bg2"></div>
+      <h1 class="display-5 fw-bold lh-1 mb-3">Let's Make your Ideas A Reality</h1>
+      <p class="lead">Dedicated to bringing life to your ideas and projects.</p>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <button type="button"  class="but-shadow fw-bolder primary-col white-bg px-4" id="toContact">Get Started <i class="settings icon"></i></button>
+      </div>
+    </div>
+  </div>
+</header>
+{%endblock body%}
+{%block contents%}
+
+{%endblock contents%}
+
+{%block scripts%}
+<script src="/static/assets/js/owl.carousel.js"></script>
+<script src="/static/assets/js/owl.animate.js"></script>
+<script src="/static/assets/js/owl.autoplay.js"></script>
+<script>
+  $(document).ready(function(){
+      $('#dev-cards').owlCarousel({
+        loop:true,
+        // animateOut: 'fadeOut',
+        // animateIn: 'fadeIn',
+        nav:true,
+        autoPlay:true,
+        items:1,
+        margin:30,
+        stagePadding:30,
+        smartSpeed:450
+    });
+    // Newsletter Form Submittion
+  });
+  $(document).on('click', '#toContact', function() {
+    window.location = "{%url 'contact' %}";
+  })
+</script>
+<!-- SVG's AJAX/JQUERY Script -->
+<script>
+  $(document).ready(function() {
+    ["object", "iframe", "embed", "img"].forEach(function(elmtType) {
+      var $e, $threeElmts = $(elmtType);
+      $e = $($threeElmts[0]);
+      if ($e[0].contentDocument) $e.replaceWith($($e[0].contentDocument.documentElement).clone());
+      $e = $($threeElmts[1]);
+      if ($e[0].getSVGDocument) $e.replaceWith($($e[0].getSVGDocument().documentElement).clone());
+      $e = $($threeElmts[2]);
+      $.get($e.attr($e.prop("nodeName") === "OBJECT" ? "data" : "src"), function(data) {
+        $e.replaceWith(data.documentElement);
+      });
+    });
+  });
+  </script>
+{%endblock scripts%}

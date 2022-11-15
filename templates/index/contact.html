@@ -1,0 +1,229 @@
+{%extends 'index/base.html' %}
+{%load static%}
+
+{%block links%}
+<style>
+.form-input{
+    position: relative;
+    width: 100%;
+    height: 60px;
+    overflow: hidden;
+}
+#id_email,#id_name{
+    width:100% !important;
+    height: 100% !important;
+    color: #fff;
+    border: none;
+    background-color: transparent;
+}
+
+#id_email:focus{
+    border: none !important;
+    padding-top: 41px;
+}
+
+#id_name:focus{
+    border: none !important;
+    padding-top: 41px;
+}
+#id_project {
+    resize: vertical;
+    background-color: transparent;
+    border: 1px solid #fff;
+}
+#id_project::placeholder{
+    color: #fff;
+}
+#id_project:focus{
+    border: 3px solid rgba(194, 59, 59, 0.945);
+    color: #fff;
+}
+label{
+    color: #fff;
+    position:absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    /* background: rgb(126, 72, 72); */
+    pointer-events: none;
+    border-bottom: 1px solid #fff;
+}
+.main-label::after{
+    content: "";
+    position:absolute;
+    left: 0px;
+    bottom: -1px;
+    width:100%;
+    height:100%;
+    border-bottom: 3px solid rgba(194, 59, 59, 0.945);
+    transform:translateX(-100%);
+    transition: transform 0.3s ease ;
+}
+.label-name{
+    position:absolute;
+    bottom:5px;
+    left:0px;
+    transition: all 0.5s ease;
+    color: #fff;
+}
+
+input:focus + .main-label .label-name,
+input:valid + .main-label .label-name{
+    transform: translateY(-150%);
+    font-size: 14px;
+    color:#fff;
+
+}
+input:focus + .main-label::after,
+input:valid + .main-label::after {
+    transform: translateX(0%);
+}
+
+.select-category{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    max-width: 100%;
+    gap: 1rem;
+}
+.category-item{
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    border: 1px solid rgba(194, 59, 59, 0.945);
+    background-color: rgba(194, 59, 59, 0.945);
+    border-radius: 3%;
+}
+.selected-category{
+    background-color: #ffff;
+    color: rgba(194, 59, 59, 0.945);
+    border-radius: 3%;
+}
+#arm{
+    transform: rotateY(360deg);
+}
+</style>
+{%endblock links%}
+
+{%block title%}
+
+{%endblock title%}
+
+{%block body%}
+<div class="text-center text-lg-center mb-3 mt-5">
+    <h1 class="display-4 fw-bold lh-1 mb-3 text-white primary-col text-capitalize">Contact us</h1>
+    <p class="fs-4 text-white">let us know exactly what you want</p>
+  </div>
+<div class="container-lg rounded py-5 pale-bg2 position-relative">
+    <div class="circle-1 px-5 py-5 pale-bg1"></div>
+    <div class="circle-2 px-5 py-5 pale-bg2"></div>
+    <div class="alert alert-success d-flex justify-content-between align-items-center d-none" role="alert" id="mssgbox">
+        <div class="h6 text-white fw-bolder text-center" id="contactmssg"></div class="h6 text-white fw-bolder">
+        <button type="button" class="btn-close" id="close-btn" aria-label="Close"></button>
+      </div>
+    <form action="" method="POST" id="contactForm" class="ui form">
+        {%csrf_token%}
+        <div class="form-input my-5">
+            <input type="email" name="email" id="id_email" autocomplete="off" required>
+            <label for="email" class="main-label">
+                <span class="label-name">
+                    Email <small>(me@example.com)</small>
+                </span>
+            </label>
+        </div>
+        <div class="form-input my-5">
+            <input type="text" name="name" id="id_name"  autocomplete="off" required>
+            <label for="name" class="main-label">
+                <span class="label-name">
+                    Name
+                </span>
+            </label>
+        </div>
+        <div class="field my-5">
+            <textarea id="id_project" placeholder="Tell us about your Project..." name="project" cols="30" rows="10" autocomplete="off" required></textarea>
+        </div>
+        <div class="my-5">
+            <label class="position-relative mb-3">What Category Does Your Project fall under</label>
+            <div class="field" >
+                <input type="hidden" name="" id="selected-category" data-num=>
+                    <div class="">
+                        {%for i in category%}
+                        <div class="mx-1 badge category-item text-decoration-none my-2 py-2 tag" role="button" id="item-{{i.pk}}"  onclick="getSelect(this, `{{i.pk}}`)">{{i.categories}}</div>
+                        {%endfor%}
+                    </div>
+            </div>
+
+        </div>
+            <button type="submit" class="nav-but but-shadow fw-bolder primary-col white-bg px-4" >Submit</button>
+    </form>
+
+</div>
+{%endblock body%}
+
+{%block scripts%}
+<script>
+const values  = [];
+function getSelect(e,ID) {
+    values.push(ID)
+    console.log(values)
+    values.forEach(function(){
+        var indexedBegin = values.indexOf(ID);
+        var indexedEnd = values.lastIndexOf(ID);
+        if(indexedBegin != indexedEnd){
+            values.pop(ID, indexedEnd)
+        }else{
+            let cleanedValues = values.map(Number);
+            $('#selected-category').attr("data-num", cleanedValues);
+            console.log($('#selected-category').attr("data-num"))
+        }
+    })
+}
+$(document).ready(function(){
+    $(document).on('submit', '#contactForm', function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{%url "getcontact" %}',
+            data: {
+                fullname: $('#id_name').val(),
+                email: $('#id_email').val(),
+                category: $('#selected-category').attr("data-num"),
+                project: $('#id_project').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+            },
+            success: function(data) {
+                var mssgBox = document.getElementById('mssgbox')
+                $('#mssgbox').removeClass('d-none')
+                $('#contactmssg').html(data)
+                $('#id_name').val("")
+                $('#id_email').val("")
+                $('#selected-category').attr("data-num", "")
+                $('#id_project').val("")
+            },
+            error: function(data) {
+                var mssgBox = document.getElementById('mssgbox')
+                $('#mssgbox').removeClass('d-none')
+                $('#mssgbox').removeClass('d-none')
+                $('#mssgbox').addClass('alert-danger')
+                $('#contactmssg').html('Try resubmitting the form')
+            }
+        })
+    });
+
+    $(document).on('click', '#close-btn', function(e) {
+        $('#mssgbox').addClass('d-none')
+    });
+})
+
+
+// class CustomSelect {
+//     constructor(originalSelectElement){
+
+//     }
+// }
+
+// document.querySelectorAll(".custom-select").forEach(selectElement =>  {
+//     new CustomSelect(selectElement);
+// })
+</script>
+{%endblock scripts%}
