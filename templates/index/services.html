@@ -2,52 +2,61 @@
 {%load static%}
 {%block title%}Services{%endblock title%}
 {%block links%}
- 
+ <style>
+    .overlord-row{
+        display: grid;
+        grid-template-columns: auto 50%;
+        grid-template-rows: 40% auto;
+        grid-template-areas: "cleft cright";
+        text-align: center;
+    }
+
+    .column-1{
+        grid-area: cleft;
+        background-color: #fff;
+    }
+
+    .column-2{
+        grid-area: cright;
+        background-color: beige;
+    }
+
+    .column-2, .column-1{
+        height:74vh;
+    }
+
+    .column-1 .big-text {
+        margin: 4rem 0rem 0rem 0rem;
+    }
+
+
+    .link-container{
+        padding: 1.5rem;
+        position: relative;
+        margin: 13rem 0rem 1rem;
+    }
+ </style>
 {%endblock links%}
 {%block body%}
-<section id="serve-header">
-    <div class="text-secondary px-4 py-5 text-center" style="margin-top: 17%;">
-    <div class="py-5">
-      <h1 class="display-4 fw-bold primary-col">Dark mode hero</h1>
-      <div class="col-lg-6 mx-auto position-relative"  style="z-index: 10;">
-        <div class="circle-1 px-5 py-5 pale-bg1"></div>
-        <div class="circle-2 px-5 py-5 pale-bg2"></div>
-        <p class="fs-5 mb-4 fw-bold text-dark">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
-      </div>
+<div class="overlord-row mt-2">
+    <div class="column-1">
+        <div class="big-text">
+            <h2 class="display-3 fw-bold">
+                What we do
+            </h2>
+        </div>
     </div>
-  </div>
-</section>
-<div class="text-center my-5">
-    <h4 class="fw-bolder display-3">
-        Our services
-    </h4>
-</div>
-<section class="mt-3">
-    <div class="row service-card">
-        <div class="col-md-6 my-3">
-            <div class="serve-texts">
-                <h2 class="serve-heading">First featurette heading. <span class="text-muted">It’ll blow your mind.</span></h2>
-                <p class="text-dark fs-">Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
+    <div class="column-2">
+        <div class="link-container">
+            <div class="link-text fs-4 fw-bold">
+                Lets Go...
+            </div>
+            <div class="link-but">
+                <a href="#" class="but">Get Started</a>
             </div>
         </div>
-        <div class="col-md-6 my-3">
-            <img src="/static/assets/imgs/webdev.jpg" class="rounded" alt="" style="height:26em; width: 100%;">
-        </div>
     </div>
-
-    <div class="row service-card">
-    <div class="col-md-6 my-3">
-        <img src="/static/assets/imgs/webdev1.jpg" class="rounded" alt="" style="height:26em; width: 100%;">
-    </div>
-    <div class="col-md-6 my-3">
-        <div class="serve-texts">
-            <h2 class="serve-heading">First featurette heading. <span class="text-muted">It’ll blow your mind.</span></h2>
-            <p class="text-dark fs-">Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
-        </div>
-    </div>
-    </div>
-</section>
-
+</div>
 {%endblock body%}
 {%block scripts%}
 <script>
