@@ -18,7 +18,7 @@
     {%endblock links%}
     <link href="/static/assets/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/assets/css/semantic.min.css">
-    <title>Startall-{%block title%}{%endblock title%}</title>
+    <title>{%block title%}{%endblock title%}</title>
 </head>
 <style>
   body, h1, h2, h3, h4, h5, h6, p{
@@ -44,6 +44,14 @@
     border: 0.5px solid #e1e1e1;
     z-index: 10;
     border-radius: 23px;
+}
+.nav-but:hover{
+  color: white !important;
+  background-color: rgba(194, 59, 59, 0.938) !important;
+}
+#toContact:hover{
+  color: white !important;
+  background-color: rgba(194, 59, 59, 0.938) !important;
 }
   .but-shadow-r{
     box-shadow: 0 0.4rem 0.9rem rgb(194 59 59 / 95%) !important;
@@ -238,22 +246,43 @@ section#serve-header {
   }
 }
 </style>
-<body  class="{%if request.path == '/projects/' %}bg-dark{%endif%}">
-  <div class="container-sm px-3 position-relative">
-    <div class="links d-flex justify-content-center align-items-center" style="flex-direction: column;">
-      <a class="text-decoration-none primary-col my-1" id="display-modal"><i class="th list icon fs-1"></i></a>
-      <a href="" class="text-decoration-none primary-col my-1">
-        <i class="facebook icon fs-1"></i>
-      </a>
-      <a href="" class="text-decoration-none primary-col my-1">
-        <i class="linkedin icon fs-1"></i>
-      </a>
-      <a href="" class="text-decoration-none primary-col my-1">
-        <i class="github icon fs-1"></i>
-      </a>
+<body  class="d-none {%if request.path == '/projects/' %}bg-dark{%endif%}">
+  <!--  -->
+  <nav class="navbar navbar-expand-lg bg-body-tertiary rounded bg-light" aria-label="Thirteenth navbar example">
+    <div class="container-fluid">
+      <embed class="navbar-toggler" width="55em" height="55em" src="{% static 'icons/burger.svg' %}" data-bs-toggle="collapse" data-bs-target="#navbarsExample11" aria-controls="navbarsExample11" aria-expanded="false" aria-label="Toggle navigation">
+
+      <div class="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
+        <a href="/" class="d-flex align-items-center navbar-brand col-lg-3 me-0  text-decoration-none">
+          <svg width="35" height="35" viewBox="0 0 95 95" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_428_2)">
+            <path d="M94.0255 45.833L69.9065 21.714C69.1565 20.964 67.8295 20.964 67.0795 21.714L61.8505 26.943C61.0695 27.724 61.0695 28.99 61.8505 29.771L79.3275 47.246L61.8515 64.724C61.0705 65.505 61.0705 66.771 61.8515 67.552L67.0805 72.781C67.4555 73.156 67.9645 73.368 68.4945 73.368C69.0235 73.368 69.5335 73.156 69.9085 72.781L94.0255 48.663C94.8065 47.881 94.8065 46.614 94.0255 45.833Z" fill="#000"></path>
+            <path d="M32.759 64.724L15.285 47.248L32.762 29.773C33.137 29.398 33.348 28.89 33.348 28.359C33.348 27.829 33.138 27.32 32.762 26.945L27.533 21.716C27.158 21.341 26.649 21.13 26.119 21.13C25.589 21.13 25.08 21.341 24.705 21.716L0.584998 45.833C-0.196002 46.614 -0.196002 47.88 0.584998 48.662L24.704 72.78C25.079 73.155 25.588 73.367 26.118 73.367C26.648 73.367 27.157 73.155 27.532 72.78L32.761 67.551C33.542 66.771 33.542 65.505 32.759 64.724Z" fill="#000"></path>
+            <path d="M61.0217 13.6C60.7677 13.134 60.3398 12.788 59.8318 12.638L55.5927 11.387C54.5347 11.073 53.4208 11.68 53.1088 12.739L33.4297 79.382C33.2797 79.891 33.3377 80.438 33.5907 80.903C33.8437 81.37 34.2728 81.715 34.7808 81.866L39.0197 83.117C39.2087 83.173 39.3998 83.2 39.5868 83.2C40.4498 83.2 41.2468 82.636 41.5038 81.765L61.1827 15.121C61.3327 14.612 61.2757 14.065 61.0217 13.6Z" fill="#000"></path>
+            </g>
+            <defs>
+            <clipPath id="clip0_428_2">
+            <rect width="94.504" height="94.504" fill="white"></rect>
+            </clipPath>
+            </defs>
+          </svg>
+          <span class="fs-2 text-uppercase fw-bolder mx-2 primary-col">Startall</span>
+        </a>
+        <ul class="navbar-nav col-lg-6 justify-content-lg-center">
+          <li class="nav-item">
+            <a class="nav-link active" style="text-decoration: underline;" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="text-decoration: underline;" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="text-decoration: underline;" target="_parent" href="https://startall.net">Disabled</a>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
-<section class="px-5">
+  </nav>
+<section class="px-5" style="margin-top: 2rem;">
     {%block body%}
 
     {%endblock body%}
@@ -261,34 +290,6 @@ section#serve-header {
 {%block contents%}
 
 {%endblock contents%}
-<div class="nav-modal d-none">
-  <div class="text-end">
-    <i class="close icon fs-2 text-white rotasion" id="close-modal"></i>
-  </div>
-  <div class="container modal-cont">
-    <div class="row row-cols-3 row-cols-sm-3 row-cols-md-3 row-cols-lg-3 g-4 py-5">
-      <div class="col-sm text-center my-4" style="line-height: 4;">
-        <li class="nav-list on-me" style="height: 0px;"><a href="" class="text-decoration-none h4 fw-bolder text-white">Home</a></li>
-        <div class="py-2 px-2 mt-5 text-end h-100">
-          <div class="backdrop pale-bg1"></div>
-        </div>
-      </div>
-      <div class="col-sm text-center my-4" style="line-height: 4;">
-        <li class="nav-list on-me" style="height: 0px;"><a href="" class="text-decoration-none h4 fw-bolder text-white">About</a></li>
-        <div class="py-2 px-4 mt-5 text-end h-100">
-          <div class="backdrop pale-bg1"></div>
-        </div>
-      </div>
-      <div class="col-sm text-center my-4" style="line-height: 4;">
-        <li class="nav-list on-me" style="height: 0px;"><a href="" class="text-decoration-none h4 fw-bolder text-white">Services</a></li>
-        <div class="py-2 px-2 mt-5 text-end h-100">
-          <div class="backdrop pale-bg1"></div>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-</div>
 <footer class="mx-5 pt-4 my-md-5 pt-md-5 border-top primary-col">
     <div class="row">
         <div class="col-12 col-md">
@@ -363,6 +364,7 @@ section#serve-header {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/dropdown.min.js" integrity="sha512-8F/2JIwyPohlMVdqCmXt6A6YQ9X7MK1jHlwBJv2YeZndPs021083S2Z/mu7WZ5g0iTlGDYqelA9gQXGh1F0tUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="/static/assets/js/jquery.js"></script>
 <script src="/static/assets/js/semantic.min.js"></script>
+<script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 {%block scripts%}
 
 {%endblock scripts%}

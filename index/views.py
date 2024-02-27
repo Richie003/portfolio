@@ -2,11 +2,16 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
 from datetime import datetime, timedelta
-from .models import Contact, Category, BlogContent
+from .models import *
 
 # Create your views here.
 def home(request):
-    context = {}
+    get_latest_saas = WhatsNew.objects.get(new=True)
+    get_all_saas = WhatsNew.objects.all()
+    context = {
+        "saas":get_all_saas,
+        "new_saas":get_latest_saas
+    }
     return render(request, 'index/home.html', context)
 
 def contact(request):
@@ -19,36 +24,18 @@ def contact(request):
 def service(request):
     return render(request, 'index/services.html', {})
 
-def getcontact(request):
+def create_contact(request):
     if request.method == 'POST':
         email = request.POST.get('email')
-        name = request.POST.get('fullname')
-        project = request.POST.get('project')
-        category = request.POST.getlist('category')
-        new_list = [int(j) for e in category for j in e.split(',')]
-        add_contact = Contact.objects.create(name=name, email=email, project=project, schedule=timezone.now() + timedelta(hours=1))
+        message = request.POST.get('message')
+        add_contact = Contact.objects.create(email=email, message=message, schedule=timezone.now() + timedelta(hours=1))
         add_contact.save()
-        for obj in new_list:
-            add_contact.category.add(obj)
         success = 'We would get back to you in an hour.'
         return HttpResponse(success)
 
 # ------------- Blog Views Start -------------- #
 
-def blog(request):
+def SassDetail(request):
     context = {}
     return render(request, 'index/blog/blog.html', context)
 
-def bloglist(request):
-    blog_queryset = BlogContent.objects.all()
-    data = []
-    for i in blog_queryset:
-        item = {
-            'title': i.title,
-            'body': i.body,
-            'image': i.thumbnail_image.url,
-            'updated': f'{i.updated.minute}min(s) ago'
-        }
-        data.append(item)
-        print(data)
-    return JsonResponse({'contents':data})
